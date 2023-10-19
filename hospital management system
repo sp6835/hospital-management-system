@@ -1,0 +1,58 @@
+import tkinter.messagebox
+from tkinter import  *
+import mysql.connector as sqlcon
+import random as rd
+
+a="mehshakar@"
+
+con=sqlcon.connect(host="localhost",user="root",password="1234")#connection to mysql 
+cur=con.cursor()
+cur = con.cursor(buffered=True)
+cur.execute("create database if not exists hopital")
+cur.execute("use hopital")
+cur.execute("create table if not exists appointment"
+            "("
+            "idno varchar(12) primary key,"
+            "name char(50),"
+            "age char(3),"
+            "gender char(1),"
+            "phone varchar(10),"
+            "bg varchar(3))")
+
+#  Message for registration
+def entry():
+    global e1,e2,e3,e4,e5,e6
+    p1=e1.get()
+    p2=e2.get()
+    p3=e3.get()
+    p4=e4.get()
+    p5=e5.get()
+    p6=e6.get()
+        
+    cur.execute('insert into appointment values(%s,%s,%s,%s,%s,%s)',(p1,p2,p3,p4,p5,p6,))
+    con.commit()
+    tkinter.messagebox.showinfo("DONE", "YOU HAVE BEEN REGISTERED")
+
+#  For registration 
+def register():
+    global e1,e2,e3,e4,e5,e6
+    root1=Tk()
+    label=Label(root1,text="REGISTER YOURSELF",font='Impact 30')
+    label.pack()
+    frame=Frame(root1,height=500,width=400)
+    frame.pack()
+    l1=Label(root1,text="AADHAR CARD NO.")
+    l1.place(x=10,y=130)
+    e1=tkinter.Entry(root1)
+    e1.place(x=160,y=130)
+    l2=Label(root1,text="NAME")
+    l2.place(x=10,y=170)
+    e2=tkinter.Entry(root1)
+    e2.place(x=160,y=170)
+    l3=Label(root1,text="AGE")
+    l3.place(x=10,y=210)
+    e3=tkinter.Entry(root1)
+    e3.place(x=160,y=210)
+    l4=Label(root1,text="GENDER M\F")
+    l4.place(x=10,y=250)
+    e4=tkinter.Entry(root1)
